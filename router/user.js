@@ -174,11 +174,16 @@ user.get('/getUploads', verifyToken, async (req, res) => {
     try {
         id = req.usr.id;
         const post = await Post.find({tokenId:req.usr.id});
-        res.json(post);
-        q1 = `select public_key from tkey where token_id = "${id}"`;
+        
+        q1 = `select public_key from tkey where token_id = "${id}"`;``
         q2 = `select dig_sig from document where token_id = "${id}"`;
-        await conSql.query(q1, async (err, res) => {
-            console.log(res);
+        let pubkey
+        await conSql.query(q1, async (err, rslt) => {
+            rr = {
+                post: post,
+                public_key: rslt[0].public_key,
+            }
+            res.json(rr);
             await conSql.query(q2, async (err, sig) => {
                 // Verify file signature ( support formats 'binary', 'hex' or 'base64')
                 for(i= 0; i < sig.length; i++) {
@@ -186,7 +191,7 @@ user.get('/getUploads', verifyToken, async (req, res) => {
                     const verifier = crypto.createVerify('RSA-SHA256');
                     verifier.write(doc);
                     verifier.end();
-                    const reslt = verifier.verify(res[0].public_key, sig[i].dig_sig, 'base64');
+                    const reslt = verifier.verify(rslt[0].public_key, sig[i].dig_sig, 'base64');
                     console.log('Digital Signature Verification of ' +post[i].postFile.name+' is : '+ reslt);
                     await conSql.query(`update document set tempered = ${!reslt} where document_name = "${post[i].fileName}"`)
                 }
