@@ -193,7 +193,7 @@ user.get('/getUploads', verifyToken, async (req, res) => {
                 }
             }); 
         });
-        res.json(post);
+        await res.json(post);
     } catch(err) {
         res.status(400).json({ message: err.message })
     }
