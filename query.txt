@@ -1,0 +1,4 @@
+1. create table login(token_id varchar(100) not null primary key, email_id varchar(100) not null, password varchar(100) not null);
+2. create table detail(token_id varchar(100) not null primary key, name varchar(100) not null);
+3. create table document(document_name varchar(100) not null primary key, token_id varchar(100) not null, dig_sig varchar(2000) not null, tempered boolean not null default false);
+4. create table tkey(token_id varchar(100) not null primary key, public_key varchar(2000) not null, private_key varchar(2000) not null);
