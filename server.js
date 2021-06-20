@@ -26,10 +26,10 @@ app.use(cookieParser(process.env.key_secret))
 //always last
 app.use(user);
 
-app.listen(5000, (err)=>{
+app.listen(port, (err)=>{
     if(err) 
         console.log(err);
     else {
-        console.log('listen at 5000');
+        console.log(`listen at ${port}`);
     }
 })
