@@ -58,7 +58,7 @@ const verifyToken = async (req, res, next) => {
 user.get('/logout', verifyToken, (req, res)=>{
     //it will clear the userData cookie
     res.clearCookie('token');
-    res.send('user logout successfully');
+    res.json({message:'user logout successfully'});
     });
 
 
@@ -100,7 +100,7 @@ user.post('/login', [
                             console.log(err.message);
                         } else {
                             await generateToken(res, rslt[0].token_id, rslt[0].name);
-                            res.send('done');
+                            res.json({message:'done'});
                         }
                     })
                 } else {
@@ -249,7 +249,7 @@ user.post('/upload', verifyToken, upload.single('postFile'), async (req, res) =>
                 await conSql.query(sql);
             } 
         });
-        res.status(200).send("done");
+        res.status(200).json({message:'done'});
     } catch(err) {
         res.status(400).json({ message: err.message });
     }
@@ -277,7 +277,7 @@ user.get('/updateData', verifyToken, upload.single('postFile'), async (req, res)
         if(err) {
             res.json(err.message);
         } else {
-            res.send("done");
+            res.json({message:'done'});
         }
     });
 });
