@@ -199,7 +199,7 @@ user.get('/getUploads', verifyToken, async (req, res) => {
     }
 });
 
-uses.get('/overview', verifyToken, async (req, res) => {
+user.get('/overview', verifyToken, async (req, res) => {
     id = req.usr.id
     qry = `select public_key from tkey where token_id = "${id}"`;
     conSql.query(qry, (err, rslt) => {
