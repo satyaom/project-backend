@@ -179,11 +179,7 @@ user.get('/getUploads', verifyToken, async (req, res) => {
         q2 = `select dig_sig from document where token_id = "${id}"`;
         let pubkey
         await conSql.query(q1, async (err, rslt) => {
-            rr = {
-                post: post,
-                public_key: rslt[0].public_key,
-            }
-            res.json(rr);
+            res.json(post);
             await conSql.query(q2, async (err, sig) => {
                 // Verify file signature ( support formats 'binary', 'hex' or 'base64')
                 for(i= 0; i < sig.length; i++) {
@@ -203,7 +199,22 @@ user.get('/getUploads', verifyToken, async (req, res) => {
     }
 });
 
-
+uses.get('/overview', verifyToken, async (req, res) => {
+    id = req.usr.id
+    qry = `select public_key from tkey where token_id = "${id}"`;
+    conSql.query(qry, (err, rslt) => {
+        if(err) {
+            res.status(400).json({message: err.message})
+        } else {
+            pkey = rslt[0].public_key;
+            detail = {
+                token_id: id,
+                public_key: pkey,
+            }
+            res.json(detail);
+        }
+    })
+}) 
 
 //upload file
 user.post('/upload', verifyToken, upload.single('postFile'), async (req, res) => {
