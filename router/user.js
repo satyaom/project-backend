@@ -177,9 +177,8 @@ user.get('/getUploads', verifyToken, async (req, res) => {
         
         q1 = `select public_key from tkey where token_id = "${id}"`;``
         q2 = `select dig_sig from document where token_id = "${id}"`;
-        let pubkey
+        let tamper_list = []
         await conSql.query(q1, async (err, rslt) => {
-            res.json(post);
             await conSql.query(q2, async (err, sig) => {
                 // Verify file signature ( support formats 'binary', 'hex' or 'base64')
                 for(i= 0; i < sig.length; i++) {
@@ -189,8 +188,14 @@ user.get('/getUploads', verifyToken, async (req, res) => {
                     verifier.end();
                     const reslt = verifier.verify(rslt[0].public_key, sig[i].dig_sig, 'base64');
                     console.log('Digital Signature Verification of ' +post[i].postFile.name+' is : '+ reslt);
-                    await conSql.query(`update document set tempered = ${!reslt} where document_name = "${post[i].fileName}"`)
+                    await conSql.query(`update document set tempered = ${!reslt} where document_name = "${post[i].fileName}"`);
+                    tamper_list.push(reslt);
                 }
+                const box = {
+                    fileinfo: post,
+                    tampered: tamper_list,
+                }
+                res.json(box);
             }); 
         });
         
