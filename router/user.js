@@ -12,7 +12,6 @@ const qrcode = require('qrcode');
 require('dotenv/config');
 //require schema
 const Post = require('../model/post');
-const { query } = require('../DB/connection_sql');
 const crypto = require('crypto');
 
 //multer storage
@@ -37,6 +36,7 @@ const upload  = multer({
 const verifyToken = async (req, res, next) => {
     try {
         const token = req.cookies.token || '';
+        console.log(token);
       if (!token) {
         return res.status(401).json('You need to Login')
       }
