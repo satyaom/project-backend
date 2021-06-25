@@ -188,7 +188,7 @@ user.get('/getUploads', verifyToken, async (req, res) => {
                     const reslt = verifier.verify(rslt[0].public_key, sig[i].dig_sig, 'base64');
                     console.log('Digital Signature Verification of ' +post[i].postFile.name+' is : '+ reslt);
                     await conSql.query(`update document set tempered = ${!reslt} where document_name = "${post[i].fileName}"`);
-                    tamper_list.push(reslt);
+                    tamper_list.push(!reslt);
                 }
                 const box = {
                     fileinfo: post,
@@ -243,7 +243,7 @@ user.post('/upload', verifyToken, upload.single('postFile'), async (req, res) =>
 
                 console.log('Digital Signature: ', signature);
                 const qr = await qrcode.toDataURL(signature);
-                
+            
                 //instance of mongoose for schema
                 const post = new Post({
                     tokenId: req.usr.id,

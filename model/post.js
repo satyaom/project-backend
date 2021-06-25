@@ -13,7 +13,7 @@ const PostSchema = mongoose.Schema({
         type: String,
     },
     qr: {
-        data: Buffer,
+        data: String,
     }
 });
 
