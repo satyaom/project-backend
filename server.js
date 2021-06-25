@@ -18,7 +18,7 @@ const user = require('./router/user');
 const port = process.env.PORT || 5000;
 
 //middleware
-app.use(cors( {origin: ['http://localhost:5000', 'https://cryptyy.herokuapp.com', 'http://localhost:8080'], credentials: true }));
+app.use(cors( {origin: ['http://localhost:5000', 'https://cryptyy.herokuapp.com', 'http://localhost:8080', 'http://192.168.29.239:8080'], credentials: true }));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cookieParser(process.env.key_secret))
