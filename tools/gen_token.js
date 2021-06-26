@@ -8,9 +8,9 @@ const generateToken = (res, id, firstname) => {
   });
   return res.cookie('token', token, {
     expires: new Date(Date.now() + expiration),
-    secure: false, // set to true if your using https
+    secure: true, // set to true if your using https
     httpOnly: true,
-    sameSite: "Lax",
+    sameSite: "None",
   });
 };
 module.exports = generateToken
