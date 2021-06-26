@@ -273,7 +273,7 @@ user.post('/upload', verifyToken, upload.single('postFile'), async (req, res) =>
 
 
 //change uploaded file
-user.get('/updateData', verifyToken, upload.single('postFile'), async (req, res) => {
+user.post('/updateData', verifyToken, upload.single('postFile'), async (req, res) => {
     number = req.body.number-1;
     const post = await Post.find({tokenId:req.usr.id});
     filename = post[number].fileName;
