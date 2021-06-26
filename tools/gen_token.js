@@ -10,7 +10,7 @@ const generateToken = (res, id, firstname) => {
     expires: new Date(Date.now() + expiration),
     secure: true, // set to true if your using https
     httpOnly: true,
-    sameSite: "Lex",
+    sameSite: "None",
   });
 };
 module.exports = generateToken
