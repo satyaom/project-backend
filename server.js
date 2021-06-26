@@ -18,7 +18,7 @@ const user = require('./router/user');
 const port = process.env.PORT || 5000;
 
 //middleware
-app.use(cors( {origin: ['https://cryptyc.herokuapp.com', 'http://192.168.29.239:8080', 'http://192.168.1.2:8081', 'http://192.168.0.104:8080'], credentials: true }));
+app.use(cors( {origin: ['https://cryptyc.herokuapp.com', 'http://192.168.29.239:8080', 'http://192.168.1.2:8081', 'http://192.168.0.104:8080', 'http://localhost:8080'], credentials: true }));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cookieParser(process.env.key_secret))
