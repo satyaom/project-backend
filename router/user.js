@@ -266,7 +266,7 @@ user.post('/upload', verifyToken, upload.single('postFile'), async (req, res) =>
                 await conSql.query(sql);
             } 
         });
-        res.status(200).json({message:'done'});
+        res.status(200).json(post);
     } catch(err) {
         res.status(400).json({ message: err.message });
     }
