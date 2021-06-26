@@ -172,9 +172,7 @@ user.post('/signup', [
 user.get('/getUploads', verifyToken, async (req, res) => {
     try {
         id = req.usr.id;
-        var post
-        while(post == undefined)
-            post = await Post.find({tokenId:req.usr.id});
+        const post = await Post.find({tokenId:req.usr.id});
         q1 = `select public_key from tkey where token_id = "${id}"`;``
         q2 = `select dig_sig from document where token_id = "${id}"`;
         let tamper_list = []
