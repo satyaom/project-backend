@@ -264,7 +264,11 @@ user.post('/upload', verifyToken, upload.single('postFile'), async (req, res) =>
                 
                 await post.save();
                 await conSql.query(sql);
-                res.status(200).json(post);
+                const box = {
+                    fileinfo: post,
+                    tampered: false,
+                }
+                res.status(200).json(box);
             } 
         });
     } catch(err) {
