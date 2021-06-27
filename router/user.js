@@ -303,7 +303,7 @@ user.post('/updateData', verifyToken, upload.single('postFile'), async (req, res
     });
 });
 
-user.get('/deleteFile', verifyToken, (req, res)=>{
+user.post('/deleteFile', verifyToken, (req, res)=>{
     try {
         file_id = req.body.fileId;
         Post.deleteOne({ fileName: file_id }, function (err) {
