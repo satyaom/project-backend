@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 //import jwt from 'jsonwebtoken'; 
 
 const generateToken = (res, id, firstname) => {
-  const expiration = 1000*60*20;
+  const expiration = 1000*60*10;
   const token = jwt.sign({ id, firstname }, process.env.JWT_SECRET, {
     expiresIn: '1h',
   });
