@@ -303,17 +303,17 @@ user.post('/updateData', verifyToken, upload.single('postFile'), async (req, res
     });
 });
 
-user.post('/deleteFile', verifyToken, (req, res)=>{
+user.post('/deleteFile', verifyToken, async (req, res)=>{
     try {
         file_id = req.body.fileId;
-        Post.deleteOne({ fileName: file_id }, function (err) {
+        await Post.deleteOne({ fileName: file_id }, function (err) {
             if(err) 
                 console.log(err);
             else
                 console.log("Successful deletion");
         });
         qry = `delete from document where document_name = "${file_id}"`;
-        conSql.query(qry, (err, rslt)=>{
+        await conSql.query(qry, (err, rslt)=>{
             if(err) {
                 console.log(err);
             } 
