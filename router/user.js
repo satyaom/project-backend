@@ -161,7 +161,7 @@ user.post('/signup', [
             });
 
         } else {
-            res.json({message:'user already exits'});
+            res.status(400).json({message:'user already exits'});
         }
     });   
 });
